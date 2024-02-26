@@ -23,13 +23,13 @@ function TodoList() {
     return (
         <>  
             
-            <label> Description </label>
+            <label> Description: </label>
             <input 
                 placeholder="Description"
                 value={todo.description}
                 onChange={e => setTodo({ ...todo, description: e.target.value })}
             />
-            <label> Date </label>
+            <label> Date: </label>
             <input
                 type="date"
                 value={todo.date}

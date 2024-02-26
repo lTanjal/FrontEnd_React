@@ -8,8 +8,8 @@ function TodoTable(props) {
                 <tbody>
 
                     <tr>
-                        <th>Date</th>
-                        <th>Description</th>
+                        <th>Date </th>
+                        <th>Description </th>
 
                     </tr>
 
