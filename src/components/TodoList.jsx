@@ -8,7 +8,8 @@ function TodoList() {
     });
     const [todos, setTodos] = useState([]);
 
-    const handelClick = () => {
+
+    const handleClick = () => {
         if (todo.description && todo.date) {
             setTodos([...todos, todo]);
             setTodo({ description: '', date: '' });
@@ -17,14 +18,20 @@ function TodoList() {
             alert("Type a description and date first");
         }
 
-    }
+    };
 
+        const handleDelete=(i)=>{
+
+        const filteredTodo= (todos.filter((todo,index) => index !== i)) ; 
+        setTodos(filteredTodo);
+    };
+    
 
     return (
-        <>  
-            
+        <>
+
             <label> Description: </label>
-            <input 
+            <input
                 placeholder="Description"
                 value={todo.description}
                 onChange={e => setTodo({ ...todo, description: e.target.value })}
@@ -36,9 +43,8 @@ function TodoList() {
                 onChange={e => setTodo({ ...todo, date: e.target.value })}
             />
 
-            <button onClick={handelClick}>Add todo</button>
-           
-            <TodoTable todos={todos} /> 
+            <button onClick={handleClick}>Add todo</button>
+            <TodoTable todos={todos} handleDelete={handleDelete} /> 
         </>
     )
 }

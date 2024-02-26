@@ -1,10 +1,10 @@
 import React from "react";
 
 function TodoTable(props) {
+
     return (
         <>
-
-            <table class ="frame">
+            <table className="frame">
                 <tbody>
 
                     <tr>
@@ -14,11 +14,13 @@ function TodoTable(props) {
                     </tr>
 
                     {
-                        props.todos.map((todo, index) =>
+                       props.todos.map((todo, index) =>
                             <tr key={index}>
                                 <td>{todo.date}</td>
                                 <td>{todo.description}</td>
-
+                                <td>
+                                    <button onClick={() => {props.handleDelete(index) }}>Delete</button>
+                                </td>
                             </tr>
                         )
                     }
@@ -29,3 +31,5 @@ function TodoTable(props) {
 }
 
 export default TodoTable;
+
+
