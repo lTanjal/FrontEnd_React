@@ -48,26 +48,53 @@ function TodoList() {
 
 
     const [colDefs, setColDefs] = useState([
-        { field: 'description', sortable: false, filter: true, editable: true },
+        { field: 'description', sortable: false, filter: "agTextColumnFilter", editable: true, floatingFilter: true,
+        filterParams: {
+            buttons: ["reset", "apply"],
+            closeOnApply: true,
+          },
+        },
         {
-            field: 'priority', sortable: true, filter: true,
+            field: 'priority', sortable: true, filter: "agTextColumnFilter", floatingFilter: true,
             cellStyle: params => params.value.toLowerCase() === "high" ? { color: 'red' } : { color: 'black' }
         },
 
-        { field: 'date', sortable: true, filter: true }
+        {   field: 'date', sortable: true, filter: "agDateColumnFilter",
+                valueFormatter : params=>params.value.format("DD.MM.YYYY"),
+                floatingFilter: true,
+                filterParams: {
+                    // provide comparator function
+                    comparator: (filterLocalDateAtMidnight, cellValue) => {
+                        const dateAsString = cellValue;
+
+                        if (dateAsString == null) {
+                            return 0;
+                        }
+
+                        // In the example application, dates are stored as dd/mm/yyyy
+                        // We create a Date object for comparison against the filter date
+                        const dateParts = dateAsString.split('.');
+                        const year = Number(dateParts[2]);
+                        const month = Number(dateParts[1]) - 1;
+                        const day = Number(dateParts[0]);
+                        const cellDate = new Date(year, month, day);
+
+                        // Now that both parameters are Date objects, we can compare
+                        if (cellDate < filterLocalDateAtMidnight) {
+                            return -1;
+                        } else if (cellDate > filterLocalDateAtMidnight) {
+                            return 1;
+                        }
+                        return 0;
+                    }
+                }            
+        } 
     ]);
 
     const gridRef = useRef();
 
 
-    const handleDateChange = (datePicker) => {
-        const dateString = format(datePicker.toISOString(), 'dd-MMM-yyyy');  //does not work:  const dateString = format(datePicker, 'yyyy-MM-dd') Uncaught RangeError: Invalid time value   
-        setTodo({ ...todo, date: dateString });                            //does not work: const dateString =datePicker.toISOString(); 
-    };                                                                   //M2 {$L: 'en', $u: undefined, $d: Sat Mar 02 2024 00:00:00 GMT+0200 (Eastern European Standard Time), $y: 2024, $M: 2, …}
-                                                                          //TodoList.jsx:67 2024-03-01T22:00:00.000Z
-
-
-    return (
+   return (
         <>
 
             <Stack direction="row" spacing={2} mt={2} justifyContent='center' alignItems="center">
@@ -89,7 +116,7 @@ function TodoList() {
                         label="Date"
                         format="DD/MM/YYYY"
                         value={todo.date}
-                        onChange={handleDateChange}
+                        onChange={date=>setTodo({ ...todo, date: date})}
                     />
                 </LocalizationProvider>
 
