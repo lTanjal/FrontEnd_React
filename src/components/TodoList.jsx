@@ -9,7 +9,9 @@ import Stack from '@mui/material/Stack';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { format } from 'date-fns';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
 
 function TodoList() {
     const [todo, setTodo] = useState({
@@ -35,6 +37,7 @@ function TodoList() {
     //   const filteredTodo= (todos.filter((todo,index) => index !== i)) ; 
     //   setTodos(filteredTodo);
     // };
+    //<TodoTable todos={todos} />
 
     const handleDelete = () => {
         if (gridRef.current.getSelectedNodes().length > 0) {
@@ -95,7 +98,14 @@ function TodoList() {
 
 
    return (
-        <>
+        <>  
+        <AppBar position= "static" >
+        <Toolbar>
+          <Typography variant='h6'>My Todos
+  
+          </Typography>
+        </Toolbar>
+      </AppBar>
 
             <Stack direction="row" spacing={2} mt={2} justifyContent='center' alignItems="center">
                 <TextField

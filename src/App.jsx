@@ -1,26 +1,48 @@
 
+import * as React from 'react';
 import './App.css'
-import TodoList from './components/TodoList'
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
+import Tab from '@mui/material/Tab'
+import Box from '@mui/material/Box'
+import Tabs from '@mui/material/Tabs'
+import Home from './components/Home';
+import TabList from '@mui/lab/TabList'
+import TabPanel from '@mui/lab/TabPanel';
+import TabContext from '@mui/lab/TabContext';
+import {Link, Outlet} from 'react-router-dom';
+import TodoList from './components/TodoList';
+
 
 function App() {
-  
+
+  const [value, setValue] = React.useState('home');
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   return (
     <> 
-    <AppBar position= "static" >
-      <Toolbar>
-        <Typography variant='h6'>My Todos
-
-        </Typography>
-      </Toolbar>
-    </AppBar>
-    
-     <TodoList/>
-      
+       <Box sx={{ width: '100%', typography: 'body1' }}>
+          <TabContext value={value}>
+            <Box sx={{ borderBottom: 1, }}>
+              <TabList onChange={handleChange} aria-label="lab API tabs example">
+                
+                  <Tab label="Home" value="home" component={Link} to="/"/>
+                  <Tab label="ToDo" value="todo" component={Link} to="/todolist"/>
+               
+              </TabList>
+              
+            </Box>
+            <TabPanel value="home">
+           <Home />
+            </TabPanel>
+            <TabPanel value="todo">
+              <TodoList />
+            </TabPanel>
+          </TabContext>
+    </Box>
     </>
-  )
+  );
 }
 
 export default App
