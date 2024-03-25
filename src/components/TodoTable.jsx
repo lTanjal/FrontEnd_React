@@ -1,6 +1,6 @@
 import React from "react";
 
-function TableTable(props) {
+function TodoTable(props) {
 
     return (
         <>

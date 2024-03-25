@@ -37,7 +37,7 @@ function TodoList() {
     //   const filteredTodo= (todos.filter((todo,index) => index !== i)) ; 
     //   setTodos(filteredTodo);
     // };
-    //<TodoTable todos={todos} />
+    //<TodoTable todos={todos} handleDelete={handleDelete} />
 
     const handleDelete = () => {
         if (gridRef.current.getSelectedNodes().length > 0) {
@@ -48,7 +48,9 @@ function TodoList() {
         }
     }
 
-
+    const handleDeleteAll =()=>{
+        setTodos([]);
+    }
 
     const [colDefs, setColDefs] = useState([
         { field: 'description', sortable: false, filter: "agTextColumnFilter", editable: true, floatingFilter: true,
@@ -133,6 +135,7 @@ function TodoList() {
 
                 <Button variant="contained" onClick={handleClick}>Add todo</Button>
                 <Button variant="contained" color="error" onClick={handleDelete}>Delete</Button>
+                <Button variant="contained" color="error" onClick={handleDeleteAll}>Delete all</Button>
 
             </Stack>
 
